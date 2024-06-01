@@ -1,0 +1,28 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Point {
+  id          String   @id @default(cuid())
+  event_name  String
+  address     String
+  points      Int
+  created_at  DateTime @default(now())
+  campaign    ApiKey   @relation(fields: [campaign_id], references: [id])
+  campaign_id String
+}
+
+model ApiKey {
+  id            String   @id @default(cuid())
+  key           String
+  campaign_name String
+  campaign_id   String   @unique
+  created_at    DateTime @default(now())
+  Point         Point[]
+}
