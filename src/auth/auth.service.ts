@@ -1,6 +1,6 @@
 import { Injectable, ConflictException } from '@nestjs/common';
 import { ApiKey } from '@prisma/client';
-import { generateApiKey } from 'src/util/helper';
+import { generateApiKey } from '../util/helper';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateApiKeyDto } from './dto/create-api-key.dto';
 
