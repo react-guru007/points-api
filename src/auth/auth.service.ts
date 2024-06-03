@@ -1,4 +1,8 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  BadRequestException,
+} from '@nestjs/common';
 import { ApiKey } from '@prisma/client';
 import { generateApiKey } from '../util/helper';
 import { PrismaService } from '../prisma/prisma.service';
@@ -9,6 +13,9 @@ export class AuthService {
   constructor(private prisma: PrismaService) {}
 
   async createApiKey(dto: CreateApiKeyDto): Promise<ApiKey> {
+    if (!dto.campaign_id) {
+      throw new BadRequestException('Campaign ID is required');
+    }
     // Check if campaign_id already exists
     const existingCampaign = await this.prisma.apiKey.findUnique({
       where: {
