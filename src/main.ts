@@ -4,9 +4,10 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: '*',
+    origin: ['http://localhost:3000', 'https://points-ui-one.vercel.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type, Authorization',
+    credentials: true,
+    allowedHeaders: 'Content-Type, Authorization, api_key, campaign_id',
   });
   await app.listen(3000);
 }
