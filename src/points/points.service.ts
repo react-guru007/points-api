@@ -30,7 +30,7 @@ export class PointsService {
     const { address, campaign_id, event_name } = query;
     return this.prisma.point.findMany({
       where: {
-        address,
+        address: address.toLowerCase(),
         event_name,
         campaign_id,
       },
